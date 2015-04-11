@@ -6,9 +6,6 @@ import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-/**
- * Created by INTEL on 10/4/2015.
- */
 public class MatchEngine {
     private ArrayList<Category> keyword = new ArrayList<>();
     private API api = new API();
@@ -18,18 +15,21 @@ public class MatchEngine {
         keyword.add(c);
     }
 
-    public void run (String query) {
-        JSONEncode(query);
-        api.fetch(mainKey, 100);
+    public void run (String query, int amount) {
+        JSONDecode(query);
+
+        api.fetch(mainKey, amount);
         StringMatcher(api);
         api.sortTweet();
+
+        JSONEncode();
     }
 
     public API getAPI () {
         return api;
     }
 
-    public void JSONEncode (String JSON) {
+    public void JSONDecode (String JSON) {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(JSON);
@@ -53,6 +53,24 @@ public class MatchEngine {
         } catch (ParseException pe) {
             System.out.println("Exception");
         }
+    }
+
+    public String JSONEncode () {
+        JSONArray output = new JSONArray();
+        JSONObject tweet = new JSONObject();
+
+        for ( int i = 0; i < api.getArrSize(); ++i ) {
+            tweet.put("user", api.getUser(i));
+            tweet.put("msg", api.getMsg(i));
+            tweet.put("date", (api.getDate(i)).toString()); /*Need display convention*/
+            tweet.put("category", api.getCategory(i));
+
+            output.add(tweet);
+        }
+
+        System.out.println(output);
+
+        return output.toJSONString();
     }
 
     public void StringMatcher ( API a ) {

@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by INTEL on 10/4/2015.
- */
-
 public class API {
     private ArrayList<Tweet> tweetData = new ArrayList<>();
 

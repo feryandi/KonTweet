@@ -1,11 +1,4 @@
-/**
- * Created by INTEL on 10/4/2015.
- */
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-
 import java.io.IOException;
-import org.json.simple.parser.*;
-import org.json.simple.*;
 
 public class Main {
 
@@ -23,7 +16,7 @@ public class Main {
                 "}";
 
         MatchEngine me = new MatchEngine();
-        me.run(s);
+        me.run(s, 25);
 
         /* JSON ENCODE */
         /*JSONObject obj = new JSONObject();

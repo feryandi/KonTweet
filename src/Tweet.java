@@ -20,14 +20,14 @@ public class Tweet implements Comparable<Tweet> {
     @Override
     public int compareTo (Tweet other){
         if ( category < other.category ) {
-            return 1;
-        } else if ( category > other.category ) {
             return -1;
+        } else if ( category > other.category ) {
+            return 1;
         } else {
             if ( date.after(other.date) ) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         }
     }
