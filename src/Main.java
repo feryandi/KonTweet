@@ -2,36 +2,38 @@
  * Created by INTEL on 10/4/2015.
  */
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-import twitter4j.*;
+
 import java.io.IOException;
+import org.json.simple.parser.*;
+import org.json.simple.*;
 
 public class Main {
 
-    public static void main(String[] args) throws TwitterException, IOException {
+    public static void main(String[] args) throws IOException {
 
-        API t = new API();
-        t.fetch("premier league", 100);
-        System.out.println("Fetched " + t.getArrSize() + " tweets");
+
+        String s = "{\n" +
+                "\"topic\":\"Football\",\n" +
+                "\"hashtag\":\"#Arsenal\",\n" +
+                "\"category\":[\n" +
+                "{\"name\":\"Arsenal\", \"keys\":[\"arsenal\",\"The Gunners\",\"Premier League\"]},\n" +
+                "{\"name\":\"Liverpool\", \"keys\":[\"Anfield\",\"liverpool\",\"barca\"]},\n" +
+                "{\"name\":\"MU\", \"keys\":[\"manchester\",\"united\"]}\n" +
+                "]\n" +
+                "}";
 
         MatchEngine me = new MatchEngine();
+        me.run(s);
 
-        /* Adding Keyword */
-        Category cat1 = new Category(1, "Arsenal");
-        cat1.addKey("arsenal");
-        cat1.addKey("The Gunners");
-        cat1.addKey("Premier League");
+        /* JSON ENCODE */
+        /*JSONObject obj = new JSONObject();
 
-        me.addCategory(cat1);
+        obj.put("name", "foo");
+        obj.put("num", new Integer(100));
+        obj.put("balance", new Double(1000.21));
+        obj.put("is_vip", new Boolean(true));
 
-        cat1 = new Category(2, "Liverpool");
-        cat1.addKey("Anfield");
-        cat1.addKey("liverpool");
-
-        me.addCategory(cat1);
-
-        me.StringMatcher(t);
-        System.out.println(t.getTweet(45).category);
-
+        System.out.print(obj);*/
 
     }
 

@@ -62,6 +62,10 @@ public class API {
         return (tweetData.get(index)).date;
     }
 
+    public int getCategory (int index) {
+        return (tweetData.get(index)).category;
+    }
+
     public int getArrSize () {
         return tweetData.size();
     }
