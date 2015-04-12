@@ -16,8 +16,10 @@ public class Main {
                 "]\n" +
                 "}";
 
+
         MatchEngine me = new MatchEngine();
-        me.run(s, 25);
+
+        me.run(args[0], 25);
 
     }
 
