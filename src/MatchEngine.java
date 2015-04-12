@@ -91,13 +91,17 @@ public class MatchEngine {
                     String k = keyIterator.next();
 
                     /* CHANGE CODE BELOW TO KMP OR BOOYER-MOYES */
+                    /* KMP */
                     if (kmpMatch((t.msg).toLowerCase(), k) != -1 ) {
                         t.category = catID;
-
-                        //System.out.println("FOUND : " + t.msg);
-
                         found = true;
                     }
+                    /* BM */
+                    /*if (bmMatch(t.msg.toLowerCase(), k) != -1) {
+                        t.category = catID;
+                        found = true;
+                    }*/
+
                     /* CHANGE CODE ABOVE TO KMP OR BOOYER-MOYES */
 
                 }
@@ -145,4 +149,40 @@ public class MatchEngine {
         return -1;
     }
 
+    public static int[] buildLast(String pattern) {
+        int last[] = new int[128];
+        for (int i = 0; i < 128; i++) {
+            last[i] = -1;
+        }
+        for (int i = 0; i < pattern.length(); i++) {
+            last[pattern.charAt(i)] = i;
+        }
+        return last;
+    }
+
+    public static int bmMatch(String text, String pattern)  {
+        int last[] = buildLast(pattern);
+        int n = text.length();
+        int m = pattern.length();
+        int i = m - 1;
+        if (i > n-1) {
+            return -1;
+        }
+        int j = m-1;
+        do {
+            if (pattern.charAt(j) == text.charAt(i)) {
+                if (j == 0) {
+                    return i;
+                } else {
+                    i--;
+                    j--;
+                }
+            } else {
+                int lo = last[text.charAt(i)];
+                i = i + m - Math.min(j, 1+lo);
+                j = m - 1;
+            }
+        } while (i <= n-1);
+        return -1;
+    }
 }
