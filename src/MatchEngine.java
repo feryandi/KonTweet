@@ -57,9 +57,9 @@ public class MatchEngine {
 
     public String JSONEncode () {
         JSONArray output = new JSONArray();
-        JSONObject tweet = new JSONObject();
 
         for ( int i = 0; i < api.getArrSize(); ++i ) {
+            JSONObject tweet = new JSONObject();
             tweet.put("user", api.getUser(i));
             tweet.put("msg", api.getMsg(i));
             tweet.put("date", (api.getDate(i)).toString()); /*Need display convention*/
@@ -91,7 +91,7 @@ public class MatchEngine {
                     String k = keyIterator.next();
 
                     /* CHANGE CODE BELOW TO KMP OR BOOYER-MOYES */
-                    if ( ((t.msg).toLowerCase()).matches("(.*)" + k.toLowerCase() + "(.*)") ) {
+                    if (kmpMatch((t.msg).toLowerCase(), k) != -1 ) {
                         t.category = catID;
 
                         //System.out.println("FOUND : " + t.msg);
@@ -104,5 +104,45 @@ public class MatchEngine {
 
             }
         }
+    } public static int[] computeFail(String pattern) {
+        int fail[] = new int[pattern.length()];
+        fail[0] = 0;
+        int m = pattern.length();
+        int i = 1;
+        int j = 0;
+        while (i < m) {
+            if (pattern.charAt(j) == pattern.charAt(i)) {
+                fail[i] = j + 1;
+                i++;
+                j++;
+            } else if (j > 0)
+                j = fail[j - 1];
+            else {
+                fail[i] = 0;
+                i++;
+            }
+        }
+        return fail;
     }
+
+    public static int kmpMatch(String text, String pattern) {
+        int n = text.length();
+        int m = pattern.length();
+        int fail[] = computeFail(pattern);
+        int j = 0;
+        int i = 0;
+        while (i < n) {
+            if (pattern.charAt(j) == text.charAt(i)) {
+                if (j == m - 1)
+                    return i - m + 1;
+                i++;
+                j++;
+            } else if (j > 0)
+                j = fail[j - 1];
+            else
+                i++;
+        }
+        return -1;
+    }
+
 }
