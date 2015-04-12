@@ -31,8 +31,7 @@ public class API {
                     tweetData.add(new Tweet(tweet.getUser().getScreenName(), tweet.getText(), tweet.getCreatedAt()));
                     ++total_tweets;
                 }
-                query = result.nextQuery();
-            } while (total_tweets <= amount);
+            } while ( (total_tweets <= amount) && ((query = result.nextQuery()) != null) );
         } catch (TwitterException te) {
             System.out.println("Failed to search tweets: " + te.getMessage());
         }
