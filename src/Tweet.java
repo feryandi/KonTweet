@@ -8,12 +8,16 @@ public class Tweet implements Comparable<Tweet> {
     public String msg;
     public Date date;
     public int category;
+    public String user_dp;
+    public long tweet_id;
 
 
-    public Tweet ( String user, String msg, Date date ) {
+    public Tweet ( String user, String msg, Date date, long tweet_id, String user_dp ) {
         this.user = user;
         this.msg = msg;
         this.date = date;
+        this.user_dp = user_dp;
+        this.tweet_id = tweet_id;
         category = -1;
     }
 

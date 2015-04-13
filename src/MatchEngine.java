@@ -10,6 +10,7 @@ public class MatchEngine {
     private ArrayList<Category> keyword = new ArrayList<>();
     private API api = new API();
     private String mainKey;
+    private long algorithm;
 
     public void addCategory ( Category c ) {
         keyword.add(c);
@@ -36,6 +37,7 @@ public class MatchEngine {
             JSONObject input = (JSONObject)obj;
 
             mainKey = (input.get("hashtag")).toString();
+            algorithm = (long) input.get("algorithm");
 
             JSONArray category = (JSONArray)input.get("category");
             for ( int i = 0; i < category.size(); ++i ) {
@@ -60,7 +62,9 @@ public class MatchEngine {
 
         for ( int i = 0; i < api.getArrSize(); ++i ) {
             JSONObject tweet = new JSONObject();
+            tweet.put("id", api.getTweetId(i));
             tweet.put("user", api.getUser(i));
+            tweet.put("user_dp", api.getUserDp(i));
             tweet.put("msg", api.getMsg(i));
             tweet.put("date", (api.getDate(i)).toString()); /*Need display convention*/
             tweet.put("category", api.getCategory(i));
@@ -90,25 +94,26 @@ public class MatchEngine {
                 while ( ( !found ) && ( keyIterator.hasNext() ) ) {
                     String k = keyIterator.next();
 
-                    /* CHANGE CODE BELOW TO KMP OR BOOYER-MOYES */
+                    if ( algorithm == 0 ) {
                     /* KMP */
-                    if (kmpMatch((t.msg).toLowerCase(), k) != -1 ) {
-                        t.category = catID;
-                        found = true;
-                    }
+                        if (kmpMatch((t.msg).toLowerCase(), k) != -1) {
+                            t.category = catID;
+                            found = true;
+                        }
+                    } else {
                     /* BM */
-                    /*if (bmMatch(t.msg.toLowerCase(), k) != -1) {
-                        t.category = catID;
-                        found = true;
-                    }*/
-
-                    /* CHANGE CODE ABOVE TO KMP OR BOOYER-MOYES */
-
+                        if (bmMatch(t.msg.toLowerCase(), k) != -1) {
+                            t.category = catID;
+                            found = true;
+                        }
+                   }
                 }
 
             }
         }
-    } public static int[] computeFail(String pattern) {
+    }
+
+    public static int[] computeFail(String pattern) {
         int fail[] = new int[pattern.length()];
         fail[0] = 0;
         int m = pattern.length();
@@ -178,8 +183,7 @@ public class MatchEngine {
                     j--;
                 }
             } else {
-                int lo = last[text.charAt(i)];
-                i = i + m - Math.min(j, 1+lo);
+                i = i + m - Math.min(j, 1+last[text.charAt(i)]);
                 j = m - 1;
             }
         } while (i <= n-1);

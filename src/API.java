@@ -22,13 +22,14 @@ public class API {
 
         try {
             Query query = new Query(hashtag);
+            //query.setCount(amount);
             QueryResult result;
             do {
                 result = twitter.search(query);
                 List<Status> tweets = result.getTweets();
                 for (Status tweet : tweets) {
-                    //System.out.println("@" + tweet.getUser().getScreenName() + ":" + tweet.getText());
-                    tweetData.add(new Tweet(tweet.getUser().getScreenName(), tweet.getText(), tweet.getCreatedAt()));
+                    //System.out.println("@" + tweet.getUser().getScreenName() + ":" + tweet.getText() + " -id " + tweet.getId());
+                    tweetData.add(new Tweet(tweet.getUser().getScreenName(), tweet.getText(), tweet.getCreatedAt(), tweet.getId(), tweet.getUser().getOriginalProfileImageURL()));
                     ++total_tweets;
                 }
             } while ( (total_tweets <= amount) && ((query = result.nextQuery()) != null) );
@@ -41,13 +42,13 @@ public class API {
         return tweetData;
     }
 
-    public Tweet getTweet (int index) {
-        return (tweetData.get(index));
-    }
+    public Tweet getTweet (int index) { return (tweetData.get(index)); }
 
-    public String getUser (int index) {
-        return (tweetData.get(index)).user;
-    }
+    public long getTweetId (int index) { return (tweetData.get(index)).tweet_id; }
+
+    public String getUser (int index) { return (tweetData.get(index)).user; }
+
+    public String getUserDp (int index) { return (tweetData.get(index)).user_dp; }
 
     public String getMsg (int index) {
         return (tweetData.get(index)).msg;

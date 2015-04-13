@@ -1,49 +1,64 @@
 <?php
-	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-		$count = $_POST['counter']; 
+	function send_message($message) {
+	    echo "data: " . json_encode($message) . PHP_EOL;
+	    echo PHP_EOL;
+	      
+	    ob_flush();
+	    flush();
+	}
 	
-		class Query {
-			public $topic = "";
-			public $hashtag = "";
-			public $algorithm = "";
-			public $category = array();		
-		}
+	function doExec($query) {
+		exec("java -jar jar/Main.jar \"" . $query . "\" 2>&1", $output);
+		$result = json_decode(utf8_encode(preg_replace('/("\w+"):(\d+)/', '\\1:"\\2"', $output[0])), true);
 		
-		class Keywords {
-			public $name = "";
-			public $keys = array();
-		}
-		
-		$q = new Query();
-		$q->topic = "Testcase";
-		$q->hashtag = $_POST['hashtag'];
-		$q->algorithm = 1;
-		
-		for ( $i = 0; $i < $count; $i++ ) {
-			$k = new Keywords();
-			$k->name = $_POST['name'.$i]; 
-			$k->keys = explode(",", $_POST['keys'.$i]);
+		send_message($result);
+	}
+
+	if ( $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+		if (isset($_GET["hashtag"])) {
+			header('Content-Type: text/event-stream');
+			header('Cache-Control: no-cache');
 			
-			foreach ($k->keys as $key) {
-				$key = trim($key);
+			$count = $_GET['counter']; 
+		
+			class Query {
+				public $topic = "";
+				public $hashtag = "";
+				public $algorithm = "";
+				public $category = array();		
 			}
 			
-			array_push($q->category,$k);
-		}
+			class Keywords {
+				public $name = "";
+				public $keys = array();
+			}
+			
+			$q = new Query();
+			$q->topic = "Testcase";
+			$q->hashtag = $_GET['hashtag'];
+			$q->algorithm = (int) $_GET['algo'];
+			
+			for ( $i = 0; $i < $count; $i++ ) {
+				$k = new Keywords();
+				$k->name = $_GET['name'.$i]; 
+				$k->keys = explode(",", $_GET['keys'.$i]);
 				
-		$query = json_encode($q);
-		$query = str_replace("\"","\\\"",$query);
+				foreach ($k->keys as &$key) {
+					$key = trim($key);
+				}
+				
+				array_push($q->category,$k);
+			}
+					
+			$query = json_encode($q);
+			$query = str_replace("\"","\\\"",$query);
 
-		echo "<pre>";
-		exec("java -jar jar/Main.jar \"" . $query . "\" 2>&1", $output);
-		$result = json_decode(utf8_encode($output[0]), true);
-		print_r($result);
-		echo "</pre>";
+			doExec($query);
+		} else {
 		
-	} else {
-	
-		echo file_get_contents('cover.php');
-		
+			readfile(__DIR__ . '\cover.php');
+			
+		}
 	}
 	
 ?>
