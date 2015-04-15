@@ -41,6 +41,19 @@ function cleanResult() {
 	}
 }
 
+function refreshTags() {
+	var i, j;
+	for ( i = 0; i < $('.category').length; i++ ) {	
+		$('#tag-' + i + ' input#keys').get(0).value = '';
+		for ( j = 0; j < $('#tag-' + i + ' span').length; j++ ) {
+			if ( $('#tag-' + i + ' input#keys').val() != '' ) {
+				$('#tag-' + i + ' input#keys').get(0).value += ",";					
+			}
+			$('#tag-' + i + ' input#keys').get(0).value += $('#tag-' + i + ' span').get(j).innerHTML;
+		}			
+	}
+}
+
 $(document).ready(function(){
 	$(window).unload(function() {
 		if (eventSource != null)
@@ -71,4 +84,24 @@ $(document).ready(function(){
 		}
 		
     });
+	
+	
+	$('.tag-holder input#adder').on('focusout',function(){    
+		var txt = this.value.replace(/[^a-zA-Z0-9\+\-\.\#\s]/g,'');
+		txt = $.trim(txt);
+		if(txt) {
+		  $(this).before('<span class="tag">'+ txt.toLowerCase() +'</span>');		  
+		  refreshTags();		  
+		}
+		this.value="";
+	}).on('keyup',function( e ){
+		if(/(188|13)/.test(e.which)) {
+			$(this).focusout(); 
+		}
+	});    
+	
+	$('.tag-holder').on('click','.tag',function(){
+		$(this).remove();  
+		refreshTags();		  
+	});
 });

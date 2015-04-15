@@ -183,7 +183,8 @@ public class MatchEngine {
                     j--;
                 }
             } else {
-                i = i + m - Math.min(j, 1+last[text.charAt(i)]);
+                int lo = last[text.charAt(i)];
+                i = i + m - Math.min(j, 1+lo);
                 j = m - 1;
             }
         } while (i <= n-1);

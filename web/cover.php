@@ -9,12 +9,16 @@
 	<body>
 	<form id="form">
 		<input type="hidden" id="counter" name="counter" value="1">
-		Keywords: <input type="text" name="hashtag"><br>
-		<button type="button" id="addnew">Add category</button>
+		Keywords: <input type="text" class="bigger-text" name="hashtag"><br>
+		<!--<button type="button" id="addnew">Add category</button>-->
 		
 		<div id="categories">
 		<div class="category">
-			Category<input type="text" name="name0"><input type="text" name="keys0">
+			Category<input type="text" class="bigger-text" name="name0">
+			<div id="tag-0" class="tag-holder">
+				<input type="hidden" id="keys" name="keys0" value="">
+				<input type="text" id="adder" class="hidden" value="">
+			</div>
 		</div>
 		</div>
 		
