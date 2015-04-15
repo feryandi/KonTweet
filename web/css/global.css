@@ -155,10 +155,11 @@ label {
 .simple-box {
 	float: left;
 	width: 49%;
-	border: 1px solid rgb(152, 152, 152);
+	border: 1px solid rgb(187, 187, 187);
 	text-align: center;
 	color: #767676;
 	cursor: pointer;
+	padding: .3em 0em;
 }
 
 .simple-box.selected {
@@ -183,4 +184,42 @@ label {
 
 .invisible {
 	display: none;
+}
+
+/* TWEET */
+.tweet {
+	float: left;
+}
+
+.tweet a {
+	text-decoration: none;
+	color: black;
+}
+
+.tweet .picture {
+	float: left;
+	width: 75px;
+	padding: 0em 1em;
+}
+
+.tweet .picture img {
+	width: 75px;
+	height: 75px;
+	border-radius: 50px;
+}
+
+.tweet .profile {
+	float: left;
+	width: 80%;
+}
+
+.tweet .message {
+	float: left;
+	width: 80%;
+}
+
+.tweet .date {
+	float: left;
+	width: 80%;
+	font-size: .8em;
 }

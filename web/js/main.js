@@ -8,9 +8,7 @@ function showResult(result) {
 	}
 	
 	for ( i = 0; i < result.length; i++ ) {
-		var prevDiv = document.createElement("div");
-		prevDiv.innerHTML = "<a href=\"http://twitter.com/statuses/" + result[i].id + "\" target=\"blank\"><img src=\"" + result[i].user_dp + "\" style=\"width:50px\">" + result[i].user + "<br>" + result[i].msg + "<br>" + result[i].date + "</a><br><br>";
-		$(prevDiv).addClass('result');
+		var prevDiv = tweetHTML(result, i);
 
 		if ( result[i].category > 0 ) {		
 			$("#holder" + result[i].category).append(prevDiv);
@@ -18,6 +16,41 @@ function showResult(result) {
 			$("#holder0").append(prevDiv);		
 		}
 	}
+}
+
+function tweetHTML(result, i) {	
+	var tweet = document.createElement("div");
+	$(tweet).addClass('tweet');
+	
+	var picture = document.createElement("div");
+	$(picture).addClass('picture');
+	
+	var profile = document.createElement("div");
+	$(profile).addClass('profile');
+	
+	var message = document.createElement("div");
+	$(message).addClass('message');
+	
+	var date = document.createElement("div");
+	$(date).addClass('date');
+	
+	var link = $("<a />", {
+		href : "http://twitter.com/statuses/" + result[i].id,
+		target : "blank"
+	});
+	
+	picture.innerHTML = "<img src=\"" + result[i].user_dp + "\">";
+	profile.innerHTML = result[i].user;
+	message.innerHTML = result[i].msg;
+	date.innerHTML = result[i].date;	
+	
+	$(link).append(picture);
+	$(link).append(profile);
+	$(link).append(message);
+	$(link).append(date);
+	$(tweet).append(link);
+	
+	return tweet;
 }
 
 var eventSource = null;
