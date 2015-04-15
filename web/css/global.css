@@ -1,0 +1,186 @@
+@font-face {
+    font-family: Roboto;
+    src: url(font/Roboto-Regular.ttf);
+}
+
+body {
+  font-family: Roboto;
+  padding: 0px;
+  margin: 0px;
+}
+
+input[type="text"] {
+  width: 100%;
+  display: block;
+  font-size: 1em;
+  font-family: Roboto;
+  border: none;
+  border-bottom: 1px solid rgb(152, 152, 152);
+}
+
+input[type="text"]:focus {
+	outline: none;
+}
+
+input[type="text"].bigger-text {
+  font-size: 1.5em;
+  padding-left: .5em;
+}
+
+input[type="text"].bigger-text.categ-name {
+	width: 100%;
+}
+
+input[type="text"].hidden {
+  padding: .3em;
+  padding-left: .9em;
+  width: 100%;
+  border: none;
+}
+
+input[type="submit"] {
+	width: 35%;
+	padding: .5em;
+  border: 1px solid rgb(152, 152, 152);
+  background-color: white;
+  cursor: pointer;
+	color: #767676;
+}
+
+button {	
+  border: 1px solid rgb(152, 152, 152);
+  background-color: white;
+  cursor: pointer;
+	color: #767676;
+}
+
+button:hover {	
+  border: 1px solid rgb(152, 152, 152);
+	color: #ffffff;
+	background-color: rgb(152, 152, 152);
+  cursor: pointer;
+}
+
+label {
+	float: left;
+	width: 100%;
+  font-size: 0.9em;	
+  color: #353535;
+  margin-bottom: 5px;
+}
+
+.centered {
+	text-align: center;
+}
+
+.tag-holder {
+	width: 100%;
+	float: left;
+  border: 1px solid rgb(152, 152, 152);
+  padding: .1em;
+}
+
+.tag-holder .flexible {
+	min-width: 8em;
+    display: block;
+    overflow: hidden;
+    padding: 0 5px 0 0;
+}
+
+.tag {
+	float: left;
+	margin: .1em;
+	margin-top: .2em;
+	padding: .1em 1.5em .1em .5em;
+	color: white;
+	border-radius: 1px;
+	background-color: rgb(187, 187, 187);
+	height: 1.6em;
+}
+
+.tag-holder span.tag:after{
+	position: absolute;
+	content:"x";
+	padding:0 4px;
+	font-family: Arial;
+	font-size: 0.8em;
+	font-weight: 700;
+	margin:3px 0 10px 5px;
+}
+
+.main-holder {
+	width: 90vw;
+	height: 90vh;
+	overflow: hidden;
+	padding: 5vh 5vw;
+}
+
+.form-holder {
+	float: left;
+	width: 400px;
+	height: 100%;
+	padding: 1%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#topic-chooser {
+	float: left;
+	width: 90%;
+	height: 5%;
+	padding: 5%;
+}
+
+.topic {
+	position: relative;
+	width: 30%;
+	height: 100%;
+	float: left;
+    border-radius: 5em;
+}
+
+.category {
+	float: left;
+	width: 98%;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.form-element {
+	float: left;
+	width: 90%;
+	padding: 15px;
+}
+
+.simple-box {
+	float: left;
+	width: 49%;
+	border: 1px solid rgb(152, 152, 152);
+	text-align: center;
+	color: #767676;
+	cursor: pointer;
+}
+
+.simple-box.selected {
+	color: #ffffff;
+	background-color: rgb(187, 187, 187);
+	cursor: pointer;
+}
+
+#algorithm {
+	float: left;
+	width: 100%;
+}
+
+.frimg-holder {
+	float: left;
+	width: 60%;
+	height: 100%;
+	background-image: url('../img/image.png');
+	background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.invisible {
+	display: none;
+}

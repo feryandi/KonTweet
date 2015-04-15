@@ -45,7 +45,7 @@ function refreshTags() {
 	var i, j;
 	for ( i = 0; i < $('.category').length; i++ ) {	
 		$('#tag-' + i + ' input#keys').get(0).value = '';
-		for ( j = 0; j < $('#tag-' + i + ' span').length; j++ ) {
+		for ( j = 0; j < $('#tag-' + i + ' .tag').length; j++ ) {
 			if ( $('#tag-' + i + ' input#keys').val() != '' ) {
 				$('#tag-' + i + ' input#keys').get(0).value += ",";					
 			}
@@ -67,41 +67,57 @@ $(document).ready(function(){
 	});
 	
     $("#addnew").click(function(){ 
-	
-		if ( $('.category').length <= 4 ) {
+		if ( $('.category').length <= 2 ) {
 			var div = $("<div></div>").addClass("category");
-			var text = "Category";
-			var inputfield1 = "<input type=\"text\" name=\"name" + $('.category').length + "\">";
-			var inputfield2 = "<input type=\"text\" name=\"keys" + $('.category').length + "\">";
-			div.append(text);
-			div.append(inputfield1);
-			div.append(inputfield2);
+			var div2 = $("<div></div>").addClass("tag-holder");
+			div2.attr('id', 'tag-' + $('.category').length);
+			var inputfield1 = "<input type=\"text\" class=\"bigger-text categ-name\" placeholder=\"Category\" name=\"name" + $('.category').length + "\">";
+			var inputfield2 = "<input type=\"hidden\" id=\"keys\" name=\"keys" + $('.category').length + "\" value=\"\">";
+			var span = $("<span></span>").addClass("flexible");
+			var inputfield3 = "<input type=\"text\" id=\"adder\" placeholder=\"add key\" class=\"hidden\" value=\"\">"
+			div2.append(inputfield1);
+			div2.append(inputfield2);
+			span.append(inputfield3);
+			div2.append(span);	
+			div.append(div2);
 			
 			$("#categories").append(div);
 			$("#counter").val($('.category').length);
 		} else {
-			alert("Sorry, you only can add up to 5 categories!");
+			alert("Sorry, you only can add up to " + $('.category').length + " categories!");
 		}
 		
     });
 	
 	
-	$('.tag-holder input#adder').on('focusout',function(){    
+	$('#categories').on('focusout','.tag-holder input#adder',function(event){ 
 		var txt = this.value.replace(/[^a-zA-Z0-9\+\-\.\#\s]/g,'');
+		this.value="";
 		txt = $.trim(txt);
 		if(txt) {
-		  $(this).before('<span class="tag">'+ txt.toLowerCase() +'</span>');		  
+		  ($(this).parent()).before('<span class="tag">'+ txt.toLowerCase() +'</span>');		  
 		  refreshTags();		  
 		}
-		this.value="";
-	}).on('keyup',function( e ){
+	}).on('keyup','.tag-holder input#adder',function( e ){
 		if(/(188|13)/.test(e.which)) {
 			$(this).focusout(); 
 		}
 	});    
 	
-	$('.tag-holder').on('click','.tag',function(){
+	$('#categories').on('click','.tag-holder .tag',function(){
 		$(this).remove();  
 		refreshTags();		  
 	});
+	
+	$('#algorithm div').on('click',function(){
+		if ( $(this).html() == "Knuth–Morris–Pratt" ) {
+			($(this).next()).removeClass("selected");
+			$("input:radio[name=algo]")[0].checked = true;
+		} else {
+			($(this).prev()).removeClass("selected");	
+			$("input:radio[name=algo]")[1].checked = true;	
+		}
+		$(this).addClass("selected");
+	});
+	
 });
