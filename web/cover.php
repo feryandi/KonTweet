@@ -1,24 +1,27 @@
 <html>
 	<head>
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/global.css">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="css/global.css">
+		<script src="js/jquery.mobile.touch.js"></script>
 		<script src="js/main.js"></script>
 	</head>
 
 	<body>
 	
 	<div id="main" class="main-holder">
+		<div class="ghost"></div>
 		<div class="form-holder">
 			<form id="form">
-				<div id="topic-chooser">
-					<div class="topic"></div>
-					<div class="topic"></div>
-					<div class="topic"></div>
+				<div class="form-element">
+					<label>Topic <button type="button" id="customtopic">Customize</button></label>
+					<div id="topic-chooser">			
+						<div class="topic">Technology</div>
+						<input id="topic-input" type="text" class="bigger-text" name="topic">
+					</div>
 				</div>
-				
-				<input type="hidden" id="counter" name="counter" value="1">
-				
+				<input type="hidden" id="counter" name="counter" value="1">				
 				<div class="form-element">
 					<label>Keywords</label>
 					<input type="text" class="bigger-text" name="hashtag">
@@ -34,7 +37,7 @@
 								<input type="hidden" id="keys" name="keys0" value="" >
 								<span class="flexible"><input type="text" id="adder" placeholder="add key" class="hidden" value=""></span>
 							</div>
-							<!--<button type="button" id="addnew">-</button>-->
+							<button type="button" id="delete">-</button>
 						</div>
 						
 					</div>
@@ -55,16 +58,26 @@
 				</div>
 			</form>
 		</div>
-		
-		<div class="frimg-holder">
-		</div>
-	</div>
-	<!--
-	<div id="analytics" class="main-holder">
+		<div class="ghost"></div>
 	</div>
 	
-	<div id="keys" class="main-holder">
-	</div>-->
+	<div id="analytics" class="main-holder">
+		<div style="float: left; width: 100%; box-sizing: border-box;">
+			<div class="ghost little"></div>
+			<div class="infograph-holder">
+			
+			</div>
+			<div class="ghost little"></div>
+		</div>
+		
+		<div style="float: left; width: 100%; box-sizing: border-box;">
+			<div class="ghost little"></div>		
+			<div class="analytics-holder">
+				
+			</div>
+			<div class="ghost little"></div>
+		</div>
+	</div>
 	
 	</body>
 </html>

@@ -4,7 +4,7 @@ function showResult(result) {
 		var categoryHolder = document.createElement("div");		
 		$(categoryHolder).attr('id', 'holder' + i);
 		$(categoryHolder).addClass("categoryHolder");
-		$("body").append(categoryHolder);
+		$(".analytics-holder").append(categoryHolder);
 	}
 	
 	for ( i = 0; i < result.length; i++ ) {
@@ -16,6 +16,11 @@ function showResult(result) {
 			$("#holder0").append(prevDiv);		
 		}
 	}
+	
+	$('#analytics').show();
+    $('html, body').animate({
+          scrollTop: $("#analytics").offset().top
+      }, 500);  
 }
 
 function tweetHTML(result, i) {	
@@ -87,7 +92,96 @@ function refreshTags() {
 	}
 }
 
+function addCategory(name) {
+	if ( $('.category').length <= 2 ) {
+		var button = "<button type=\"button\" id=\"delete\">-</button>";
+		
+		var div = $("<div></div>").addClass("category");
+		var div2 = $("<div></div>").addClass("tag-holder");
+		div2.attr('id', 'tag-' + $('.category').length);
+		var inputfield1 = "<input type=\"text\" class=\"bigger-text categ-name\" placeholder=\"Category\" name=\"name" + $('.category').length + "\">" + button;
+		var inputfield2 = "<input type=\"hidden\" id=\"keys\" name=\"keys" + $('.category').length + "\" value=\"\">";
+		var span = $("<span></span>").addClass("flexible");
+		var inputfield3 = "<input type=\"text\" id=\"adder\" placeholder=\"add key\" class=\"hidden\" value=\"\">"
+				
+		div2.append(inputfield1);
+		div2.append(inputfield2);
+		span.append(inputfield3);
+		div2.append(span);			
+				
+		div.append(div2);
+		$("#categories").append(div);
+		$("#counter").val($('.category').length);
+		
+		if ( name != "" ) { 
+			$("#tag-" + ( $('.category').length - 1 ) + " .categ-name" ).val(name);
+		}
+	} else {
+		alert("Sorry, you only can add up to " + $('.category').length + " categories!");
+	}
+}
+
+function removeAllCategory() {
+	$('.category').remove();
+}
+
+function topicClicked(d) {
+	var arr = [["Technology", "Computer", "Mobile"],
+			   ["Sport","Football","Test001"],
+			   ["Travelling","Test002","Test003","Test004"]];		
+	var i = 0;
+	var n;
+	
+	while ( arr[i][0] != $("#topic-chooser div").html() ) {
+		++i;
+	}	
+	
+	i -= d;
+	
+	if ( (i+1) >= arr.length ) {
+		$("#topic-chooser div").html(arr[0][0]); 
+		n = 0;
+	} else {		
+		$("#topic-chooser div").html(arr[i+1][0]); 
+		n = i + 1;
+	}		
+	
+	$('#topic-chooser input').val($("#topic-chooser div").html());
+	
+	removeAllCategory();
+	for ( var j = 1; j < arr[n].length; ++j ) {
+		addCategory(arr[n][j]);
+	}
+}
+
+function deleteCategory(that) {
+	var i = 0;
+	thet = that;
+	while ( $(thet).prev().length > 0) {
+		++i;
+		
+		thet = $(thet).prev();
+	}		
+
+	--i;
+	saved = that;
+	while ( $(that).next().length > 0) {	
+		that = $(that).next();
+		
+		$(that).children(".tag-holder").attr('id', 'tag-' + i);
+		($($(that).children())).children(".categ-name").attr('name', 'name' + i);
+		($($(that).children())).children("#keys").attr('name', 'keys' + i);
+		
+		++i;
+	}	
+	
+	$(saved).remove();	
+}
+
 $(document).ready(function(){
+	topicClicked(1);
+	$('#analytics').hide();
+			
 	$(window).unload(function() {
 		if (eventSource != null)
 			eventSource.close();
@@ -100,27 +194,18 @@ $(document).ready(function(){
 	});
 	
     $("#addnew").click(function(){ 
-		if ( $('.category').length <= 2 ) {
-			var div = $("<div></div>").addClass("category");
-			var div2 = $("<div></div>").addClass("tag-holder");
-			div2.attr('id', 'tag-' + $('.category').length);
-			var inputfield1 = "<input type=\"text\" class=\"bigger-text categ-name\" placeholder=\"Category\" name=\"name" + $('.category').length + "\">";
-			var inputfield2 = "<input type=\"hidden\" id=\"keys\" name=\"keys" + $('.category').length + "\" value=\"\">";
-			var span = $("<span></span>").addClass("flexible");
-			var inputfield3 = "<input type=\"text\" id=\"adder\" placeholder=\"add key\" class=\"hidden\" value=\"\">"
-			div2.append(inputfield1);
-			div2.append(inputfield2);
-			span.append(inputfield3);
-			div2.append(span);	
-			div.append(div2);
-			
-			$("#categories").append(div);
-			$("#counter").val($('.category').length);
-		} else {
-			alert("Sorry, you only can add up to " + $('.category').length + " categories!");
-		}
-		
+		addCategory("");		
     });
+	
+	$("#customtopic").click(function() {
+		if ( $("#topic-chooser div").is(":visible") ) {
+			$('#topic-chooser div').hide();		
+			$(this).html("Choose from list");
+		} else {
+			$('#topic-chooser div').show();		
+			$(this).html("Customize");	
+		}
+	});
 	
 	
 	$('#categories').on('focusout','.tag-holder input#adder',function(event){ 
@@ -151,6 +236,18 @@ $(document).ready(function(){
 			$("input:radio[name=algo]")[1].checked = true;	
 		}
 		$(this).addClass("selected");
+	});
+		
+	$('#topic-chooser div').on('click', function(){
+		topicClicked(0);
+	});
+	
+	$('#categories').on('click','.tag-holder #delete', function(){		
+		deleteCategory($($(this).parent()).parent());		
+		$("#counter").val($('.category').length);
+
+		
+		
 	});
 	
 });
