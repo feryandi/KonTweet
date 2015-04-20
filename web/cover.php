@@ -61,19 +61,26 @@
 		<div class="ghost"></div>
 	</div>
 	
-	<div id="analytics" class="main-holder">
-		<div style="float: left; width: 100%; box-sizing: border-box;">
-			<div class="ghost little"></div>
-			<div class="infograph-holder">
-			
-			</div>
-			<div class="ghost little"></div>
-		</div>
-		
+	<div id="analytics" class="main-holder">		
 		<div style="float: left; width: 100%; box-sizing: border-box;">
 			<div class="ghost little"></div>		
 			<div class="analytics-holder">
-				
+				<label class="big-text">Analytics</label>
+				<div id="analytics-bar">
+					<div class="bar green" style="width: 0px"></div>
+					<div class="bar red" style="width: 0px"></div>
+					<div class="bar blue" style="width: 0px"></div>
+				</div>
+				<div id="categoryChooser">
+					<!--<div class="category-btn">
+						All Recent Tweets
+					</div>
+					<div class="category-btn">
+						<div class="color-sample"></div>Unknown
+					</div>-->
+				</div>
+				<div class="result">
+				</div>
 			</div>
 			<div class="ghost little"></div>
 		</div>

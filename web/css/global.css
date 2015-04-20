@@ -222,24 +222,25 @@ label {
 
 .analytics-holder {
 	float: left;
-	width: 75%;
+	width: 78%;
 	box-sizing: border-box;
-	padding: 25px;
+	padding: 25px 65px;
 	margin-top: 10px;
 	overflow-x: hidden;
 	background-color: white;
 	box-shadow: 0px 0px 15px #212121;
 }
 
-.infograph-holder {
+.result {
 	float: left;
-	width: 75%;
-	box-sizing: border-box;
-	padding: 25px;
-	margin-top: 10%;
+	border: 1px solid rgb(152, 152, 152);
 	overflow-x: hidden;
-	background-color: white;
-	box-shadow: 0px 0px 15px #212121;
+	width: 100%;
+}
+
+.categoryHolder {
+	position: relative;
+	padding: 0% 2%;
 }
 
 .ghost.little {
@@ -269,9 +270,79 @@ label {
 	}
 }
 
+/* ANALYTICS */
+#analytics-bar {
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	height: 15px;
+	border: 1px solid rgb(152, 152, 152);
+}
+
+.bar.red {
+	float: left;
+	height: 100%;
+	background-color: #F44336;
+}
+
+.bar.blue {
+	float: left;
+	height: 100%;
+	background-color: #5C6BC0;
+}
+
+.bar.green {
+	float: left;
+	height: 100%;
+	background-color: #9CCC65;
+}
+
+.category-btn {
+	float: left;
+	padding: .5em;
+	margin: 10px 10px 10px 0px;
+	border: 1px solid rgb(152, 152, 152);
+	cursor: pointer;
+}
+
+.color-sample {
+	float: left;
+	width: 1.3em;
+	height: 1.3em;
+	margin-right: .5em;
+	border: 1px solid rgb(152, 152, 152);
+}
+
+.color-sample.red {
+	background-color: #F44336;
+}
+.color-sample.blue {
+	background-color: #5C6BC0;
+}
+.color-sample.green {
+	background-color: #9CCC65;
+}
+
+.big-text {
+  font-size: 1.5em;
+}
+
+.sorry {
+	float: left;
+	padding: 20px;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	color: #8B8B8B;
+}
+
 /* TWEET */
 .tweet {
 	float: left;
+	border-bottom: 1px solid rgb(152, 152, 152);
+	padding: 20px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .tweet a {
@@ -288,12 +359,12 @@ label {
 .tweet .picture img {
 	width: 75px;
 	height: 75px;
-	border-radius: 50px;
+	border-radius: 5px;
 }
 
 .tweet .profile {
 	float: left;
-	width: 80%;
+	font-weight: 700;
 }
 
 .tweet .message {
@@ -303,6 +374,8 @@ label {
 
 .tweet .date {
 	float: left;
-	width: 80%;
 	font-size: .8em;
+	padding-top: .2em;
+	padding-left: 1em;
+	color: #919191;
 }

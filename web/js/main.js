@@ -1,23 +1,65 @@
+function showCategory(n) {;	
+	for ( i = 0; i <= $('.category-btn').length; i++ ) {
+		$('#holder' + i).hide();		
+	}
+	$('#holder' + n).show();	
+}
+
 function showResult(result) {
 	var i;		
+	var size = [0, 0, 0, 0];
+	
 	for ( i = 0; i <= $('.category').length; i++ ) {
 		var categoryHolder = document.createElement("div");		
 		$(categoryHolder).attr('id', 'holder' + i);
 		$(categoryHolder).addClass("categoryHolder");
-		$(".analytics-holder").append(categoryHolder);
+		$(".result").append(categoryHolder);
+		
+		makeCatButton(i);
 	}
+	
 	
 	for ( i = 0; i < result.length; i++ ) {
 		var prevDiv = tweetHTML(result, i);
 
 		if ( result[i].category > 0 ) {		
-			$("#holder" + result[i].category).append(prevDiv);
+			$("#holder" + result[i].category).prepend(prevDiv);	
+			size[result[i].category] += 1;			
 		} else {	
-			$("#holder0").append(prevDiv);		
+			$("#holder0").prepend(prevDiv);		
+			size[0] += 1;		
 		}
 	}
 	
+	var totalSize = result.length;
+	
 	$('#analytics').show();
+	
+	for ( i = 0; i <= $('.category').length; i++ ) {
+		switch (i) {
+			case 0:
+				$(".bar.red").css("width", Math.floor((size[i + 1] / totalSize) * $("#analytics-bar").width()) + "px" );	
+				break;
+			case 1:
+				$(".bar.blue").css("width", + Math.floor((size[i + 1] / totalSize) * $("#analytics-bar").width()) + "px" );		
+				break;
+			case 2:
+				$(".bar.green").css("width", + Math.floor((size[i + 1] / totalSize) * $("#analytics-bar").width()) + "px" );		
+				break;
+		}
+		
+		var sorry = document.createElement("div");
+		$(sorry).addClass('sorry');
+		
+		if ( size[i] == 0 ) {			
+			$(sorry).html("No Result Found");
+		} else {
+			$(sorry).html("End of Result");		
+		}
+		
+		$("#holder" + i).append(sorry);	
+	}
+		
     $('html, body').animate({
           scrollTop: $("#analytics").offset().top
       }, 500);  
@@ -33,6 +75,9 @@ function tweetHTML(result, i) {
 	var profile = document.createElement("div");
 	$(profile).addClass('profile');
 	
+	var nametime = document.createElement("div");
+	$(nametime).addClass('nametime');
+	
 	var message = document.createElement("div");
 	$(message).addClass('message');
 	
@@ -47,15 +92,57 @@ function tweetHTML(result, i) {
 	picture.innerHTML = "<img src=\"" + result[i].user_dp + "\">";
 	profile.innerHTML = result[i].user;
 	message.innerHTML = result[i].msg;
-	date.innerHTML = result[i].date;	
+	
+	var d = new Date(result[i].date/1);
+	var now = new Date();
+	
+	if ( now.getHours() - d.getHours() > 0 ) {		
+		date.innerHTML += now.getHours() - d.getHours() + " h";	
+	} else {
+		date.innerHTML += now.getMinutes() - d.getMinutes() + " m";		
+	}
+	
+	date.innerHTML += " ago";		
 	
 	$(link).append(picture);
-	$(link).append(profile);
+	$(link).append(nametime);
 	$(link).append(message);
-	$(link).append(date);
+	$(nametime).append(profile);
+	$(nametime).append(date);
 	$(tweet).append(link);
 	
 	return tweet;
+}
+
+function makeCatButton(i) {
+
+	var categoryButton = document.createElement("div");	
+	$(categoryButton).addClass("category-btn");
+	
+	var colorSample = document.createElement("div");	
+	$(colorSample).addClass("color-sample");
+		
+	switch (i) {
+		case 1:
+			$(colorSample).addClass("red");			
+			break;
+		case 2:
+			$(colorSample).addClass("blue");		
+			break;
+		case 3:
+			$(colorSample).addClass("green");		
+			break;
+	}
+	
+	if ( i > 0 ) {
+		$(categoryButton).attr("onclick", "showCategory(" + i + ")");
+		(categoryButton).innerHTML += $('.category #tag-' + (i - 1) + " .categ-name").val();
+	} else {
+		$(categoryButton).attr("onclick", "showCategory(" + 0 + ")");
+		(categoryButton).innerHTML += "Unknown";
+	}
+	$(categoryButton).append(colorSample);
+	$("#categoryChooser").append(categoryButton);
 }
 
 var eventSource = null;
@@ -77,6 +164,7 @@ function cleanResult() {
 	for ( i = 0; i <= $('.categoryHolder').length; i++ ) {
 		$('#holder' + i).remove();
 	}
+	$('.category-btn').remove();
 }
 
 function refreshTags() {
@@ -181,7 +269,7 @@ function deleteCategory(that) {
 $(document).ready(function(){
 	topicClicked(1);
 	$('#analytics').hide();
-			
+	
 	$(window).unload(function() {
 		if (eventSource != null)
 			eventSource.close();

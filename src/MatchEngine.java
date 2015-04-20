@@ -66,7 +66,7 @@ public class MatchEngine {
             tweet.put("user", api.getUser(i));
             tweet.put("user_dp", api.getUserDp(i));
             tweet.put("msg", api.getMsg(i));
-            tweet.put("date", (api.getDate(i)).toString()); /*Need display convention*/
+            tweet.put("date", (api.getDate(i)).getTime()); /*Need display convention*/
             tweet.put("category", api.getCategory(i));
 
             output.add(tweet);
