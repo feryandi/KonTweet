@@ -14,8 +14,6 @@ function showResult(result) {
 		$(categoryHolder).attr('id', 'holder' + i);
 		$(categoryHolder).addClass("categoryHolder");
 		$(".result").append(categoryHolder);
-		
-		makeCatButton(i);
 	}
 	
 	
@@ -37,16 +35,17 @@ function showResult(result) {
 	
 	for ( i = 0; i <= $('.category').length; i++ ) {
 		switch (i) {
-			case 0:
-				$(".bar.red").css("width", Math.floor((size[i + 1] / totalSize) * $("#analytics-bar").width()) + "px" );	
-				break;
 			case 1:
-				$(".bar.blue").css("width", + Math.floor((size[i + 1] / totalSize) * $("#analytics-bar").width()) + "px" );		
+				$(".bar.red").css("width", Math.floor((size[i] / totalSize) * $("#analytics-bar").width()) + "px" );
 				break;
 			case 2:
-				$(".bar.green").css("width", + Math.floor((size[i + 1] / totalSize) * $("#analytics-bar").width()) + "px" );		
+				$(".bar.blue").css("width", + Math.floor((size[i] / totalSize) * $("#analytics-bar").width()) + "px" );		
+				break;
+			case 3:
+				$(".bar.green").css("width", + Math.floor((size[i] / totalSize) * $("#analytics-bar").width()) + "px" );		
 				break;
 		}
+		makeCatButton(i, size[i]);
 		
 		var sorry = document.createElement("div");
 		$(sorry).addClass('sorry');
@@ -114,7 +113,7 @@ function tweetHTML(result, i) {
 	return tweet;
 }
 
-function makeCatButton(i) {
+function makeCatButton(i, n) {
 
 	var categoryButton = document.createElement("div");	
 	$(categoryButton).addClass("category-btn");
@@ -136,10 +135,10 @@ function makeCatButton(i) {
 	
 	if ( i > 0 ) {
 		$(categoryButton).attr("onclick", "showCategory(" + i + ")");
-		(categoryButton).innerHTML += $('.category #tag-' + (i - 1) + " .categ-name").val();
+		(categoryButton).innerHTML += $('.category #tag-' + (i - 1) + " .categ-name").val() + " (" + n + ")";
 	} else {
 		$(categoryButton).attr("onclick", "showCategory(" + 0 + ")");
-		(categoryButton).innerHTML += "Unknown";
+		(categoryButton).innerHTML += "Unknown" + " (" + n + ")";
 	}
 	$(categoryButton).append(colorSample);
 	$("#categoryChooser").append(categoryButton);
