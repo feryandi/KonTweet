@@ -1,0 +1,74 @@
+body{ 
+	background-image: url('../img/bg1.jpg'); /*http://siloka.com/wp-content/uploads/2015/01/mesjid_agung_bandung-siloka.jpg*/
+	background-size: cover;
+    background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+input[type="text"].hiding {
+  padding: .3em;
+  padding-left: .9em;
+  width: 100%;
+  border: none;
+  box-shadow: none;
+}
+
+.form-search{
+	background-color: rgba(0, 0, 0, 0.5);
+	border-color: rgba(255, 255, 255, 0.5);
+	box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); 
+}
+
+.analytics-holder {
+	min-height: 438px;
+}
+
+.hide-button:hover,
+.hide-button:focus,
+.hide-button{
+	background: none;
+	border: none;
+}
+
+.row-centered {
+	padding-top:6em;
+    text-align:center;
+}
+.col-centered {
+	cursor:pointer;
+    display:inline-block;
+    float:none;
+    text-align:left;
+    margin-right:-4px;
+}
+
+.tag-holder {
+	width: 100%;
+	float: left;
+	padding: .1em;
+	max-height: 100px;
+	overflow-y: auto;
+}
+
+.tag {
+	float: left;
+	margin: .1em;
+	margin-top: .2em;
+	padding: .1em .5em .1em .5em;
+	color: white;
+	border-radius: 1px;
+	background-color: rgb(187, 187, 187);
+	height: 1.6em;
+}
+
+.flexible {
+	min-width: 8em;
+    display: block;
+    overflow: hidden;
+    padding: 0 5px 0 0;
+}
+
+.title{
+	margin-top: 0;
+	color: white;
+}

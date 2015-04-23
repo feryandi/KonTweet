@@ -14,8 +14,6 @@ function showResult(result) {
 		$(categoryHolder).attr('id', 'holder' + i);
 		$(categoryHolder).addClass("categoryHolder");
 		$(".result").append(categoryHolder);
-		
-		makeCatButton(i);
 	}
 	
 	
@@ -37,16 +35,17 @@ function showResult(result) {
 	
 	for ( i = 0; i <= $('.category').length; i++ ) {
 		switch (i) {
-			case 0:
-				$(".bar.red").css("width", Math.floor((size[i + 1] / totalSize) * $("#analytics-bar").width()) + "px" );	
-				break;
 			case 1:
-				$(".bar.blue").css("width", + Math.floor((size[i + 1] / totalSize) * $("#analytics-bar").width()) + "px" );		
+				$(".bar.red").css("width", Math.floor((size[i] / totalSize) * $("#analytics-bar").width()) + "px" );
 				break;
 			case 2:
-				$(".bar.green").css("width", + Math.floor((size[i + 1] / totalSize) * $("#analytics-bar").width()) + "px" );		
+				$(".bar.blue").css("width", + Math.floor((size[i] / totalSize) * $("#analytics-bar").width()) + "px" );		
+				break;
+			case 3:
+				$(".bar.green").css("width", + Math.floor((size[i] / totalSize) * $("#analytics-bar").width()) + "px" );		
 				break;
 		}
+		makeCatButton(i, size[i]);
 		
 		var sorry = document.createElement("div");
 		$(sorry).addClass('sorry');
@@ -114,7 +113,7 @@ function tweetHTML(result, i) {
 	return tweet;
 }
 
-function makeCatButton(i) {
+function makeCatButton(i, n) {
 
 	var categoryButton = document.createElement("div");	
 	$(categoryButton).addClass("category-btn");
@@ -136,10 +135,10 @@ function makeCatButton(i) {
 	
 	if ( i > 0 ) {
 		$(categoryButton).attr("onclick", "showCategory(" + i + ")");
-		(categoryButton).innerHTML += $('.category #tag-' + (i - 1) + " .categ-name").val();
+		(categoryButton).innerHTML += $('.category #tag-' + (i - 1) + " .categ-name").val() + " (" + n + ")";
 	} else {
 		$(categoryButton).attr("onclick", "showCategory(" + 0 + ")");
-		(categoryButton).innerHTML += "Unknown";
+		(categoryButton).innerHTML += "Unknown" + " (" + n + ")";
 	}
 	$(categoryButton).append(colorSample);
 	$("#categoryChooser").append(categoryButton);
@@ -181,36 +180,25 @@ function refreshTags() {
 }
 
 function addCategory(name) {
-	if ( $('.category').length <= 2 ) {
-		var button = "<button type=\"button\" id=\"delete\">-</button>";
-		
-		var div = $("<div></div>").addClass("category");
-		var div2 = $("<div></div>").addClass("tag-holder");
-		div2.attr('id', 'tag-' + $('.category').length);
-		var inputfield1 = "<input type=\"text\" class=\"bigger-text categ-name\" placeholder=\"Category\" name=\"name" + $('.category').length + "\">" + button;
-		var inputfield2 = "<input type=\"hidden\" id=\"keys\" name=\"keys" + $('.category').length + "\" value=\"\">";
-		var span = $("<span></span>").addClass("flexible");
-		var inputfield3 = "<input type=\"text\" id=\"adder\" placeholder=\"add key\" class=\"hidden\" value=\"\">"
-				
-		div2.append(inputfield1);
-		div2.append(inputfield2);
-		span.append(inputfield3);
-		div2.append(span);			
-				
-		div.append(div2);
-		$("#categories").append(div);
-		$("#counter").val($('.category').length);
+	if ( $("#counter").val() <= 2 ) {	
+	
+		$("#cat-" + $("#counter").val()).show();
+		$("#counter").val(parseInt($("#counter").val()) + 1);	
 		
 		if ( name != "" ) { 
-			$("#tag-" + ( $('.category').length - 1 ) + " .categ-name" ).val(name);
+			$("#cat-" + ( $("#counter").val() - 1 ) + " .form-control.input" ).val(name);			
 		}
+		
 	} else {
 		alert("Sorry, you only can add up to " + $('.category').length + " categories!");
+		console.log("Sorry, you only can add up to " + $('.category').length + " categories!"); 
 	}
+	console.log("haha"); 
 }
 
 function removeAllCategory() {
-	$('.category').remove();
+	$('.category').hide();
+	$("#counter").val(0);
 }
 
 function topicClicked(d) {
@@ -239,34 +227,23 @@ function topicClicked(d) {
 	removeAllCategory();
 	for ( var j = 1; j < arr[n].length; ++j ) {
 		addCategory(arr[n][j]);
+		console.log(arr[n][j]);
 	}
 }
 
-function deleteCategory(that) {
-	var i = 0;
+function deleteCategory(that, n) {
 	thet = that;
-	while ( $(thet).prev().length > 0) {
-		++i;
-		
-		thet = $(thet).prev();
-	}		
-
-	--i;
-	saved = that;
-	while ( $(that).next().length > 0) {	
-		that = $(that).next();
-		
-		$(that).children(".tag-holder").attr('id', 'tag-' + i);
-		($($(that).children())).children(".categ-name").attr('name', 'name' + i);
-		($($(that).children())).children("#keys").attr('name', 'keys' + i);
-		
-		++i;
-	}	
 	
-	$(saved).remove();	
+	saved = that;
+	
+	$("#counter").val(parseInt($("#counter").val())-1);
+	
+	$("#cat-" + $("#counter").val()).hide();	
 }
 
 $(document).ready(function(){
+	$('#algo').bootstrapSwitch();
+     
 	topicClicked(1);
 	$('#analytics').hide();
 	
@@ -276,13 +253,14 @@ $(document).ready(function(){
 	});
 	
 	$("#form").submit(function() {
+		console.log("masuk");
 		cleanResult();
 		getJSON();
 		return false;
 	});
 	
-    $("#addnew").click(function(){ 
-		addCategory("");		
+    $("#addnew").click(function(){		
+		addCategory("");
     });
 	
 	$("#customtopic").click(function() {
@@ -330,12 +308,8 @@ $(document).ready(function(){
 		topicClicked(0);
 	});
 	
-	$('#categories').on('click','.tag-holder #delete', function(){		
-		deleteCategory($($(this).parent()).parent());		
-		$("#counter").val($('.category').length);
-
-		
-		
+	$('#categories').on('click','.input-group-btn #delete', function(){		
+		deleteCategory($($($($($(this).parent()).parent()).parent()).parent()).parent());		
 	});
 	
 });

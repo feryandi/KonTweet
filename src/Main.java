@@ -21,7 +21,7 @@ public class Main {
 
         MatchEngine me = new MatchEngine();
 
-        me.run(args[0], 25);
+        me.run(args[0], 100);
 
     }
 
