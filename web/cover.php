@@ -4,22 +4,31 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-switch.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/slideshow.css">
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap-switch.min.js"></script>
-	<script src="js/custom.js"></script>
 	<script src="js/main.js"></script>
 	
 </head>
 
 <body>
+	<ul class="slideshow">
+		<li><span>Image 01</span><div><h3>Masjid Raya Bandung <br> ©2015 Google</h3></div></li>
+		<li><span>Image 02</span><div><h3>Jembatan Layang <br> ©2015 Google</h3></div></li>
+		<li><span>Image 03</span><div><h3>Plaza Widya ITB <br> ©2015 Google</h3></div></li>
+		<li><span>Image 04</span><div><h3>Gedung Merdeka <br> ©2015 Google</h3></div></li>
+		<li><span>Image 05</span><div><h3>Braga <br> ©2015 Google</h3></div></li>
+		<li><span>Image 06</span><div><h3>Braga Culinary Night <br> ©2015 Google</h3></div></li>
+	</ul>
+	
 	<div class="container">
 	<form id="form">
 		<div class="row" style="margin-top:20px">
 			<div class="col-md-8">
-				<div class="well form-search">
-					<div class="analytics-holder">
-						<label class="big-text">Analytics</label>
+				<div class="well form-search minimum">
+					<div id="analytics" >
+						<h4 class="text-center title">Analytics</h4>
 						<div id="analytics-bar">
 							<div class="bar green" style="width: 0px"></div>
 							<div class="bar red" style="width: 0px"></div>
@@ -33,19 +42,25 @@
 								<div class="color-sample"></div>Unknown
 							</div>-->
 						</div>
-						<div class="result">
+						<div style="overflow: hidden">
+							<div class="result well slideInDown animated">
+							</div>		
+						</div>						
+					</div>				
+					
+					<div id="analyze-btn" class="row row-centered">
+						<div class="col-md-3 col-centered">
+							<button type="submit" id="submitter" class="btn btn-success hide-button">
+							<span class="glyphicon glyphicon-search search-logo" aria-hidden="true"></span>
+							<span class="search-text">do another search</span>
+							</button>								
 						</div>
-						
-						<div class="row row-centered">
-							<div class="col-md-3 col-centered">
-								<button type="submit" class="btn btn-success hide-button">
-								<span class="glyphicon glyphicon-search" aria-hidden="true" style="font-size: 200px; color: white;"></span>
-								</button>
-								
-							</div>
-						</div>
-
-						
+					</div>
+					
+					<div id="analyze-load" class="loader">
+					  <svg class="circular">
+						<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="10" stroke-miterlimit="10"/>
+					  </svg>
 					</div>
 				</div>
 			</div>
@@ -59,7 +74,7 @@
 			<div class="well form-search">
 				<h4 class="text-center title">Topic</h4>
 				<div id="topic-chooser">			
-					<div class="topic btn btn-default btn-block">Technology</div>
+					<div class="topic btn btn-default btn-block">Sport</div>
 					<!-- <input id="topic-input" type="text" class="bigger-text" name="topic"> -->
 				</div>
 				<br>
@@ -70,7 +85,7 @@
 						<input name="hashtag" type="text" class="form-control input" placeholder="Keyword">
 					</div>
 					<div class="col-sm-4">
-							<input type="checkbox" id="algo" name="algo" data-on="primary" data-on-text="KMP" data-off-text="BM" data-label-width="7"/>
+						<input type="checkbox" id="algo" name="algo" data-on="primary" data-on-text="KMP" data-off-text="BM" data-label-width="7"/>
 					</div>
 				
 					

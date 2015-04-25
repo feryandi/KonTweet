@@ -8,8 +8,8 @@ function showCategory(n) {;
 function showResult(result) {
 	var i;		
 	var size = [0, 0, 0, 0];
-	
-	for ( i = 0; i <= $('.category').length; i++ ) {
+		
+	for ( i = 0; i <= $("#counter").val(); i++ ) {
 		var categoryHolder = document.createElement("div");		
 		$(categoryHolder).attr('id', 'holder' + i);
 		$(categoryHolder).addClass("categoryHolder");
@@ -33,7 +33,7 @@ function showResult(result) {
 	
 	$('#analytics').show();
 	
-	for ( i = 0; i <= $('.category').length; i++ ) {
+	for ( i = 0; i <= $("#counter").val(); i++ ) {
 		switch (i) {
 			case 1:
 				$(".bar.red").css("width", Math.floor((size[i] / totalSize) * $("#analytics-bar").width()) + "px" );
@@ -59,9 +59,11 @@ function showResult(result) {
 		$("#holder" + i).append(sorry);	
 	}
 		
-    $('html, body').animate({
-          scrollTop: $("#analytics").offset().top
-      }, 500);  
+	$('#analyze-load').hide();
+	$('#analyze-btn').show();
+	$('#analyze-btn').removeClass("row-centered");
+	$('#analyze-btn .glyphicon').css("font-size", "-=180");
+	$('#analyze-btn .search-text').show();
 }
 
 function tweetHTML(result, i) {	
@@ -117,6 +119,7 @@ function makeCatButton(i, n) {
 
 	var categoryButton = document.createElement("div");	
 	$(categoryButton).addClass("category-btn");
+	$(categoryButton).addClass("btn btn-default");	
 	
 	var colorSample = document.createElement("div");	
 	$(colorSample).addClass("color-sample");
@@ -135,10 +138,10 @@ function makeCatButton(i, n) {
 	
 	if ( i > 0 ) {
 		$(categoryButton).attr("onclick", "showCategory(" + i + ")");
-		(categoryButton).innerHTML += $('.category #tag-' + (i - 1) + " .categ-name").val() + " (" + n + ")";
+		(categoryButton).innerHTML += $('#cat-' + (i - 1) + " .form-control.input").val() + " <span class=\"label label-default\">" + n + "</span>";
 	} else {
 		$(categoryButton).attr("onclick", "showCategory(" + 0 + ")");
-		(categoryButton).innerHTML += "Unknown" + " (" + n + ")";
+		(categoryButton).innerHTML += "Unknown" + " <span class=\"label label-default\">" + n + "</span>";
 	}
 	$(categoryButton).append(colorSample);
 	$("#categoryChooser").append(categoryButton);
@@ -193,7 +196,6 @@ function addCategory(name) {
 		alert("Sorry, you only can add up to " + $('.category').length + " categories!");
 		console.log("Sorry, you only can add up to " + $('.category').length + " categories!"); 
 	}
-	console.log("haha"); 
 }
 
 function removeAllCategory() {
@@ -202,9 +204,10 @@ function removeAllCategory() {
 }
 
 function topicClicked(d) {
-	var arr = [["Technology", "Computer", "Mobile"],
-			   ["Sport","Football","Test001"],
-			   ["Travelling","Test002","Test003","Test004"]];		
+	var arr = [["Sport", "Sepakbola", "Basket", "Voli"],
+			   ["Kesehatan","Gaya Hidup","Makanan"],
+			   ["Flora dan Fauna","Hewan","Tumbuhan"],
+			   ["Entertainment","Music","Game","Show"]];		
 	var i = 0;
 	var n;
 	
@@ -227,7 +230,6 @@ function topicClicked(d) {
 	removeAllCategory();
 	for ( var j = 1; j < arr[n].length; ++j ) {
 		addCategory(arr[n][j]);
-		console.log(arr[n][j]);
 	}
 }
 
@@ -246,6 +248,8 @@ $(document).ready(function(){
      
 	topicClicked(1);
 	$('#analytics').hide();
+	$('#analyze-load').hide();
+	$('#analyze-btn .search-text').hide();
 	
 	$(window).unload(function() {
 		if (eventSource != null)
@@ -310,6 +314,12 @@ $(document).ready(function(){
 	
 	$('#categories').on('click','.input-group-btn #delete', function(){		
 		deleteCategory($($($($($(this).parent()).parent()).parent()).parent()).parent());		
+	});
+	
+	$('#submitter').on('click', function(){
+		$('#analytics').hide();
+		$('#analyze-btn').hide();
+		$('#analyze-load').show();
 	});
 	
 });
