@@ -12,10 +12,12 @@ public class MatchEngine {
     private String mainKey;
     private long algorithm;
 
+    //menambahkan Category baru dalam yang ingin dimasukkan kedalam pencarian
     public void addCategory ( Category c ) {
         keyword.add(c);
     }
 
+    //fungsi untuk menjalankan keseluruhan proses analisis
     public void run (String query, int amount) {
         JSONDecode(query);
 
@@ -25,11 +27,12 @@ public class MatchEngine {
 
         JSONEncode();
     }
-
+    //fungsi untuk mendapatkan API yang ingin di lakukan analisis
     public API getAPI () {
         return api;
     }
 
+    //prosedure untuk mengubah inputan dari html menjadi array argument yang akan dimasukkan kedalam exec
     public void JSONDecode (String JSON) {
         JSONParser parser = new JSONParser();
         try {
@@ -57,6 +60,7 @@ public class MatchEngine {
         }
     }
 
+    //fungsi yang mengembalikan string yang berisi hasil analisis untuk ditampilkan dalam html
     public String JSONEncode () {
         JSONArray output = new JSONArray();
 
@@ -77,6 +81,7 @@ public class MatchEngine {
         return output.toJSONString();
     }
 
+    //prosedure pencocokan string pada setiap tweet yang ada didalam API, lalu mengubah kategori-kategori tweet tersebut yang kategori yang tepat
     public void StringMatcher ( API a ) {
 
         ListIterator<Tweet> tweetIterator = a.getTweetData().listIterator();
@@ -99,12 +104,15 @@ public class MatchEngine {
                         if (kmpMatch((t.msg).toLowerCase(), k) != -1) {
                             t.category = catID;
                             found = true;
+
+                              t.msg=      (t.msg).replaceAll("(?i)" + k, "<b>" + k + "</b>");
                         }
                     } else {
                     /* BM */
                         if (bmMatch(t.msg.toLowerCase(), k) != -1) {
                             t.category = catID;
                             found = true;
+                            t.msg=      (t.msg).replaceAll("(?i)" + k, "<b>" + k + "</b>");
                         }
                    }
                 }
@@ -113,6 +121,7 @@ public class MatchEngine {
         }
     }
 
+    //fungsi pinggiran untuk algoritma KMP
     public static int[] computeFail(String pattern) {
         int fail[] = new int[pattern.length()];
         fail[0] = 0;
@@ -134,6 +143,7 @@ public class MatchEngine {
         return fail;
     }
 
+    //algoritma pencocokan string KMP yang mengembalikan indeks dimana pattern ditemukan
     public static int kmpMatch(String text, String pattern) {
         int n = text.length();
         int m = pattern.length();
@@ -154,17 +164,21 @@ public class MatchEngine {
         return -1;
     }
 
+    //fungsi yang mengembalikan array of integer sebagai keberadaan terakhir karakter yang bersesuaian
     public static int[] buildLast(String pattern) {
-        int last[] = new int[128];
-        for (int i = 0; i < 128; i++) {
+
+        int last[] = new int[256];
+        for (int i = 0; i < 256; i++) {
             last[i] = -1;
         }
         for (int i = 0; i < pattern.length(); i++) {
             last[pattern.charAt(i)] = i;
         }
+
         return last;
     }
 
+    //algoritma pencocokan string BM
     public static int bmMatch(String text, String pattern)  {
         int last[] = buildLast(pattern);
         int n = text.length();
@@ -175,7 +189,8 @@ public class MatchEngine {
         }
         int j = m-1;
         do {
-            if (pattern.charAt(j) == text.charAt(i)) {
+
+            if (pattern.charAt(j) == text.charAt(i) ) {
                 if (j == 0) {
                     return i;
                 } else {
@@ -183,7 +198,11 @@ public class MatchEngine {
                     j--;
                 }
             } else {
-                int lo = last[text.charAt(i)];
+                int lo;
+                if (text.charAt(i)>255 || text.charAt(i)<=0)
+                    lo=-1;
+                else
+                    lo = last[text.charAt(i)];
                 i = i + m - Math.min(j, 1+lo);
                 j = m - 1;
             }
