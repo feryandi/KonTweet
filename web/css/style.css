@@ -1,7 +1,7 @@
 body{ 
-	background-image: url('../img/bg1.jpg'); /*http://siloka.com/wp-content/uploads/2015/01/mesjid_agung_bandung-siloka.jpg*/
+	background-image: url('../img/bg1.jpg');
 	background-size: cover;
-    background-repeat: no-repeat;
+  background-repeat: no-repeat;
 	background-attachment: fixed;
 }
 
@@ -24,6 +24,7 @@ input[type="text"].hiding {
 	min-height: 438px;
 }
 
+
 .minimum {
 	min-height: 438px;
 }
@@ -33,6 +34,10 @@ input[type="text"].hiding {
 .hide-button{
 	background: none;
 	border: none;
+}
+
+.popover{
+    max-width: 80%;
 }
 
 .row-centered {

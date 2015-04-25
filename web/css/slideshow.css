@@ -42,9 +42,10 @@
     -ms-animation: titleAnimation 36s linear infinite 0s;
     animation: titleAnimation 36s linear infinite 0s; 
 }
-.slideshow li div h3 { 
+.slideshow li div { 
     font-family: Arial, sans-serif;
     font-size: 2em;
+    text-shadow: 0 0 3px black;
     padding: 0;
 }
 .slideshow li:nth-child(1) span { 

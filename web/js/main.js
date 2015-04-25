@@ -64,6 +64,8 @@ function showResult(result) {
 	$('#analyze-btn').removeClass("row-centered");
 	$('#analyze-btn .glyphicon').css("font-size", "-=180");
 	$('#analyze-btn .search-text').show();
+	
+	showCategory(0);
 }
 
 function tweetHTML(result, i) {	
@@ -245,7 +247,13 @@ function deleteCategory(that, n) {
 
 $(document).ready(function(){
 	$('#algo').bootstrapSwitch();
-     
+    $('[data-toggle="popover"]').popover({
+		html: true,
+		placement: 'top',
+		trigger: 'hover',
+		content: function(){return '<p align="center"><img src="'+$(this).data('img') + '" style="border-radius: 200px;" /></p>';}
+	});
+
 	topicClicked(1);
 	$('#analytics').hide();
 	$('#analyze-load').hide();

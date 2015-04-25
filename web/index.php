@@ -8,7 +8,7 @@
 	}
 	
 	function doExec($query) {
-		exec("java -jar jar/Main.jar \"" . $query . "\" 2>&1", $output);
+		exec("java -jar jar/KonTweet.jar \"" . $query . "\" 2>&1", $output);
 		$result = json_decode(utf8_encode(preg_replace('/("\w+"):(\d+)/', '\\1:"\\2"', $output[0])), true);
 		
 		send_message($result);
@@ -61,7 +61,7 @@
 			doExec($query);
 		} else {
 		
-			readfile(__DIR__ . '\cover.php');
+			readfile(__DIR__ . '/cover.php');
 			
 		}
 	}
