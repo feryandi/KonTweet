@@ -306,7 +306,7 @@ $(document).ready(function(){
 	});
 	
 	$('#algorithm div').on('click',function(){
-		if ( $(this).html() == "Knuth–Morris–Pratt" ) {
+		if ( $(this).html() == "Knuthâ€“Morrisâ€“Pratt" ) {
 			($(this).next()).removeClass("selected");
 			$("input:radio[name=algo]")[0].checked = true;
 		} else {
