@@ -87,31 +87,36 @@ public class MatchEngine {
         ListIterator<Tweet> tweetIterator = a.getTweetData().listIterator();
         while( tweetIterator.hasNext() ) {
             Tweet t = tweetIterator.next();
-            boolean found = false;
+            //boolean found = false;
             int catID = 0;
-
+            int temp=-1;
             ListIterator<Category> categoryIterator = keyword.listIterator();
-            while ( ( !found ) && ( categoryIterator.hasNext() ) ) {
+            while ( /*( !found ) &&*/ ( categoryIterator.hasNext() ) ) {
                 ++catID;
                 Category c = categoryIterator.next();
 
                 ListIterator<String> keyIterator = (c.key).listIterator();
-                while ( ( !found ) && ( keyIterator.hasNext() ) ) {
+                while ( /*( !found ) && */( keyIterator.hasNext() ) ) {
                     String k = keyIterator.next();
 
                     if ( algorithm == 0 ) {
                     /* KMP */
-                        if (kmpMatch((t.msg).toLowerCase(), k) != -1) {
-                            t.category = catID;
-                            found = true;
-
-                              t.msg=      (t.msg).replaceAll("(?i)" + k, "<b>" + k + "</b>");
+                        if (kmpMatch((t.msg).toLowerCase(), k) != -1 ) {
+                            if  (temp==-1 || kmpMatch((t.msg).toLowerCase(), k)<temp  ) {
+                                temp = kmpMatch((t.msg).toLowerCase(), k);
+                                t.category = catID;
+                                //found = true;
+                            }
+                            t.msg=      (t.msg).replaceAll("(?i)" + k, "<b>" + k + "</b>");
                         }
                     } else {
                     /* BM */
                         if (bmMatch(t.msg.toLowerCase(), k) != -1) {
-                            t.category = catID;
-                            found = true;
+                            if  (temp==-1 || bmMatch((t.msg).toLowerCase(), k)<temp  ) {
+                                temp = bmMatch((t.msg).toLowerCase(), k);
+                                t.category = catID;
+                                //found = true;
+                            }
                             t.msg=      (t.msg).replaceAll("(?i)" + k, "<b>" + k + "</b>");
                         }
                    }

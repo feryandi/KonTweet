@@ -8,7 +8,7 @@ public class Main {
         String s = "{\n" +
                 "\"topic\":\"Football\",\n" +
                 "\"hashtag\":\"#Arsenal\",\n" +
-                "\"algorithm\":1,\n" +
+                "\"algorithm\":0,\n" +
                 "\"category\":[\n" +
                 "{\"name\":\"Arsenal\", \"keys\":[\"arsenal\",\"The Gunners\",\"Premier League\"]},\n" +
                 "{\"name\":\"Liverpool\", \"keys\":[\"Anfield\",\"liverpool\",\"barca\"]},\n" +
