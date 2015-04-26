@@ -251,7 +251,7 @@ $(document).ready(function(){
 		html: true,
 		placement: 'top',
 		trigger: 'hover',
-		content: function(){return '<p align="center"><img src="'+$(this).data('img') + '" style="border-radius: 200px;" /></p>';}
+		content: function(){return '<p align="center" style="text-shadow:none; color: black;"><img src="'+$(this).data('img') + '" style="border-radius: 200px;" /><br><br>Kami membuat web dan aplikasi ini penuh dengan cinta<br>Inilah diriku dengan melodi untukmu<br>Dan bila aku berdiri tegar sampai hari ini<br>Bukan karna kuat dan hebatku<br>Semua karena cinta, semua karena cinta...<br>Tak mampu diriku dapat berdiri tegar, terima kasih cinta</p>';}
 	});
 
 	topicClicked(1);
@@ -265,9 +265,32 @@ $(document).ready(function(){
 	});
 	
 	$("#form").submit(function() {
-		console.log("masuk");
-		cleanResult();
-		getJSON();
+		var isValid = true;
+		
+		if ( $('#hashtag').val() == '' ) {
+			isValid = false;
+		} else {
+		
+			for ( var i = 0; i < $("#counter").val(); ++i ) {
+				if ( $('#tag-' + i + ' #keys').val() == '' ) {
+					isValid = false;
+					console.log('false');
+				}
+			}
+		
+		}
+		
+		if ( isValid ) {
+			$('#analytics').hide();
+			$('#analyze-btn').hide();
+			$('#analyze-load').show();
+		
+			cleanResult();
+			getJSON();
+		} else {
+			alert("You must fill all field");
+		}
+
 		return false;
 	});
 	
@@ -325,9 +348,6 @@ $(document).ready(function(){
 	});
 	
 	$('#submitter').on('click', function(){
-		$('#analytics').hide();
-		$('#analyze-btn').hide();
-		$('#analyze-load').show();
 	});
 	
 });

@@ -79,7 +79,7 @@
 						<div class="row">
 						
 							<div class="col-sm-8">
-								<input name="hashtag" type="text" class="form-control input" placeholder="Keyword">
+								<input id="hashtag" name="hashtag" type="text" class="form-control input" placeholder="Keyword">
 							</div>
 							<div class="col-sm-4">
 								<input type="checkbox" id="algo" name="algo" data-on="primary" data-on-text="KMP" data-off-text="BM" data-label-width="7"/>
@@ -187,14 +187,15 @@
 		</form>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12" style="text-align:center;">
+				<div class="col-md-12" style="color:white; text-align:center; text-shadow: 0 0 3px black">
 					<br>
 					<br>
 					<br>
 					<h4 style="color:white;">With love, <br></h4>
 					<h4>
-						<a tabindex="0" role="button" data-toggle="popover" title="Tim KonTweet" data-img="img/kita.png" style="color:white;">Yoga, Fery, Nitho~</a> 
+						<a tabindex="0" role="button" data-toggle="popover" title="Tim KonTweet" data-img="img/kita.png"  style="color:white;">Yoga, Fery, Nitho~</a> 
 					</h4>
+					<img src="img/logo.png" width="150px"/>
 				</div>
 				
 			</div>
